@@ -19,7 +19,7 @@ class WarauthServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('wardwar/warauth');
-		include __DIR__ . '/../../routes.php';
+		include __DIR__.'/../../routes.php';
 	}
 
 	/**
@@ -30,6 +30,16 @@ class WarauthServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		//
+		$this->app['warauth'] = $this->app->share(function($app)
+		{
+			return new Warauth;
+		});
+
+		$this->app->booting(function()
+		{
+		  $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+		  $loader->alias('Warauth', 'Wardwar\Warauth\Facades\Warauth');
+		});
 	}
 
 	/**
