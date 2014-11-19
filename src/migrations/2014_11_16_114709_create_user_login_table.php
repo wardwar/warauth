@@ -13,17 +13,15 @@ class CreateUserLoginTable extends Migration {
 	public function up()
 	{
 		//USER_LOGIN TABLE
-		Schema::create('USER_LOGIN',function(Blueprint $table)
+		Schema::create('user_login',function(Blueprint $table)
 		{
-			$table->increments('id_userlogin');
-			$table->integer('id_user');
-			$table->integer('id_printing');
-			$table->string('role');
-			$table->string('username')->unique();
-			$table->string('email')->unique();
+			$table->increments('id');
+			$table->enum('role',array(9,5,7));
+			$table->string('username',60)->unique();
+			$table->string('email',50)->unique();
 			$table->string('password');
 			$table->boolean('confirmed')->default(0);
-			$table->string('confirmation_code')->nullable();
+			$table->string('confirmation_code',30)->nullable();
 			$table->boolean('banned')->default(0);
 			$table->string('facebook_token')->unique()->nullable();
 			$table->rememberToken();
@@ -39,7 +37,7 @@ class CreateUserLoginTable extends Migration {
 	public function down()
 	{
 		//DROP TABLE
-		Schema::drop('USER_LOGIN');
+		Schema::drop('user_login');
 	}
 
 }
